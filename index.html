@@ -59,21 +59,35 @@
   .dot:nth-child(4){ width:60px;height:60px;bottom:30%;right:10%;animation-delay:2s; }
   @keyframes float { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-18px) scale(1.04);} }
 
-  .hero-title { font-size: clamp(4rem, 12vw, 8rem); line-height: 1; color: var(--brown); letter-spacing: 0.02em; animation: slideUp .7s .15s cubic-bezier(.22,1,.36,1) both; }
+  .hero-emblem { position: absolute; top: 100px; right: 5%; width: 160px; height: auto; z-index: 10; animation: spinEmblem 20s linear infinite; }
+  @keyframes spinEmblem { 100% { transform: rotate(360deg); } }
+  @media(max-width:768px){ .hero-emblem { width: 100px; top: 80px; } }
+
+  .hero-title { font-size: clamp(4rem, 12vw, 8rem); line-height: 1; color: var(--brown); letter-spacing: 0.02em; animation: slideUp .7s .15s cubic-bezier(.22,1,.36,1) both; margin-top: 20px;}
   .hero-sub { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 600; color: var(--brown); max-width: 600px; margin: 20px auto 0; line-height: 1.6; animation: slideUp .7s .3s cubic-bezier(.22,1,.36,1) both; text-transform: uppercase; letter-spacing: 0.05em; }
   @keyframes slideUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
 
-  .hero-img-wrap { margin: 40px 0; animation: slideUp .7s .45s cubic-bezier(.22,1,.36,1) both; }
-  .hero-img-wrap img { max-width: 280px; height: auto; filter: drop-shadow(0 16px 32px rgba(93,58,26,.25)); animation: wobble 3s ease-in-out infinite; }
-  @keyframes wobble { 0%,100%{transform:rotate(-2deg) scale(1);} 50%{transform:rotate(2deg) scale(1.03);} }
+  .hero-carousel { position: relative; width: 300px; height: 300px; margin: 20px auto; animation: slideUp .7s .45s cubic-bezier(.22,1,.36,1) both; }
+  .hero-carousel img { position: absolute; top: 0; left: 0; width: 100%; height: auto; opacity: 0; filter: drop-shadow(0 16px 32px rgba(93,58,26,.25)); animation: fadeCycle 9s infinite; }
+  .hero-carousel img:nth-child(1) { animation-delay: 0s; }
+  .hero-carousel img:nth-child(2) { animation-delay: 3s; }
+  .hero-carousel img:nth-child(3) { animation-delay: 6s; }
+  
+  @keyframes fadeCycle {
+    0%, 25% { opacity: 1; transform: scale(1) rotate(-2deg); }
+    33%, 92% { opacity: 0; transform: scale(1.05) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(-2deg); }
+  }
 
-  .cta-group { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: slideUp .7s .6s cubic-bezier(.22,1,.36,1) both; }
+  .cta-group { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: slideUp .7s .6s cubic-bezier(.22,1,.36,1) both; margin-top: 20px; }
   .btn { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .04em; padding: 16px 36px; border-radius: 99px; border: none; cursor: pointer; transition: transform .18s, box-shadow .18s; text-decoration: none; display: inline-block; text-transform: uppercase; }
   .btn:hover { transform: translateY(-3px); }
   .btn-primary { background: var(--red); color: #fff; box-shadow: 0 8px 24px rgba(211,47,47,.4); }
   .btn-primary:hover { box-shadow: 0 12px 32px rgba(211,47,47,.55); }
   .btn-outline { background: transparent; color: var(--brown); border: 3px solid var(--brown); box-shadow: 0 4px 14px rgba(93,58,26,.15); }
   .btn-outline:hover { background: var(--brown); color: var(--bg-main); }
+  .btn-whatsapp { background: #25D366; color: #fff; box-shadow: 0 8px 24px rgba(37,211,102,.4); border: none; margin-top: 40px; }
+  .btn-whatsapp:hover { box-shadow: 0 12px 32px rgba(37,211,102,.55); background: #20BA56; color: #fff; }
 
   .section { padding: 80px 24px; }
   .section-inner { max-width: 900px; margin: 0 auto; }
@@ -144,9 +158,18 @@
 
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s, transform .6s; }
   .revealed { opacity: 1; transform: translateY(0); }
+
+  .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: #FFF; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1000; transition: transform 0.3s; text-decoration: none; }
+  .whatsapp-float:hover { transform: scale(1.1); }
 </style>
 </head>
 <body>
+
+<a href="https://wa.me/553193393731" class="whatsapp-float" target="_blank">
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+</a>
 
 <nav>
   <div class="nav-logo">
@@ -163,13 +186,19 @@
 <section class="hero">
   <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   
-  <div class="hero-img-wrap">
-    <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979044/OPQP_-_LOGO_3_n0obtn.png" alt="O Pão de Queijo Perfeito Emblema">
-  </div>
+  <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979044/OPQP_-_LOGO_3_n0obtn.png" alt="Emblema Origem e Tradição" class="hero-emblem">
+
   <h1 class="hero-title" style="display:none;">O Pão de Queijo Perfeito</h1>
+
+  <div class="hero-carousel">
+    <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979988/OPQP_-_LOGO_6_xi1vtr.png" alt="Pão de Queijo Tradicional">
+    <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979988/OPQP_-_LOGO_5_hogcli.png" alt="Pão de Queijo Gorgonzola">
+    <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979988/OPQP_-_LOGO_4_boigbk.png" alt="Pão de Queijo Multigrãos">
+  </div>
+
   <p class="hero-sub">Nascido em Minas, feito de polvilho, queijo e muita alma mineira. Uma mordida e você entende.</p>
   
-  <div class="cta-group" style="margin-top: 40px;">
+  <div class="cta-group">
     <a href="#predate" class="btn btn-primary">Quero ser avisado primeiro</a>
     <a href="#sabores" class="btn btn-outline">Ver os sabores</a>
   </div>
@@ -282,8 +311,8 @@
         <div class="end-icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         </div>
-        <h3 class="amatic-font">SAVASSI — BH</h3>
-        <p>Rua Pernambuco, 1240<br>Belo Horizonte - MG</p>
+        <h3 class="amatic-font">JABAQUARA</h3>
+        <p>Av. Eng. Armando de Arruda Pereira, 1500<br>São Paulo - SP</p>
         <span class="end-status">Em breve</span>
       </div>
       
@@ -291,8 +320,8 @@
         <div class="end-icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         </div>
-        <h3 class="amatic-font">MERCADO CENTRAL</h3>
-        <p>Av. Augusto de Lima, 744<br>Belo Horizonte - MG</p>
+        <h3 class="amatic-font">VILA MARIANA</h3>
+        <p>Rua Domingos de Morais, 2000<br>São Paulo - SP</p>
         <span class="end-status">Em breve</span>
       </div>
       
@@ -300,8 +329,8 @@
         <div class="end-icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M3 9h18"></path><path d="M3 15h18"></path></svg>
         </div>
-        <h3 class="amatic-font">SHOPPING DIAMONDMALL</h3>
-        <p>Av. Olegário Maciel, 1600<br>Belo Horizonte - MG</p>
+        <h3 class="amatic-font">SAÚDE</h3>
+        <p>Av. Jabaquara, 1200<br>São Paulo - SP</p>
         <span class="end-status">Em breve</span>
       </div>
 
@@ -310,21 +339,26 @@
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
         </div>
         <h3 class="amatic-font">DELIVERY</h3>
-        <p>Grande BH e região.<br>Quentinho até a sua porta.</p>
+        <p>Zona Sul e região.<br>Quentinho até a sua porta.</p>
         <span class="end-status">Em breve</span>
       </div>
       
     </div>
+
+    <div style="text-align: center; margin-top: 50px;" class="reveal">
+      <a href="https://wa.me/553193393731" target="_blank" class="btn btn-whatsapp">SEJA UM DISTRIBUIDOR</a>
+    </div>
+
   </div>
 </section>
 
 <footer>
   <img src="https://res.cloudinary.com/dzcaxmbjn/image/upload/v1776979043/OPQP_-_LOGO_488_x_254_px_bo6vzr.png" alt="O Pão de Queijo Perfeito">
-  <p>© 2026 O Pão de Queijo Perfeito. Feito com afeto em Minas Gerais.</p>
+  <p>© 2026 O Pão de Queijo Perfeito. Feito com afeto.</p>
 </footer>
 
 <script>
-  const target = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
+  const target = new Date('2026-05-01T00:00:00');
   function tick() {
     const diff = target - Date.now();
     if(diff <= 0) return;
